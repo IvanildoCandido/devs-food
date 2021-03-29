@@ -6,8 +6,10 @@ export const Container = styled.div`
 `;
 
 export const Menu = styled.div`
+  align-items: center;
   background-color: #136713;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 80px;
 `;

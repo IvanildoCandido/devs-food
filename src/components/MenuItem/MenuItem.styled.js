@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const LinkArea = styled.a`
   border-radius: 10px;
+  background-color: ${(props) => (props.active ? '#0b4d0b' : 'transparent')};
   display: flex;
   justify-content: center;
   align-items: center;
