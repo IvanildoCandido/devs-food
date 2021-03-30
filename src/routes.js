@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
-import HomeScreen from './pages/HomeScreen';
+import HomeScreen from './pages/HomeScreen/HomeScreen';
 import Tela2Screen from './pages/Tela2Screen';
 
 const Routes = () => {
