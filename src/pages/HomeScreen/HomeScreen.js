@@ -3,6 +3,7 @@ import Header from '../../components/Header/Header';
 import { CategoryArea, CategoryList, Container } from './HomeScreen.styled';
 import api from '../../api';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
+import ReactTooltip from 'react-tooltip';
 
 export default () => {
   const [headerSearch, setHeaderSearch] = useState('');
@@ -15,6 +16,7 @@ export default () => {
       if (res.error === '') {
         setCategories(res.result);
       }
+      ReactTooltip.rebuild();
     });
   }, []);
   useEffect(() => {}, [activeCategory]);
@@ -28,7 +30,7 @@ export default () => {
             <CategoryItem
               data={{
                 id: 0,
-                title: 'Todas as categorias',
+                name: 'Todas as categorias',
                 image: '/assets/food-and-restaurant.png',
               }}
               activeCategory={activeCategory}
