@@ -14,6 +14,7 @@ import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import ReactTooltip from 'react-tooltip';
 import ProductItem from '../../components/ProductItem/ProductItem';
 
+let searchTimer = null;
 export default () => {
   const [headerSearch, setHeaderSearch] = useState('');
   const [categories, setCategories] = useState([]);
@@ -21,16 +22,28 @@ export default () => {
   const [totalPages, setTotalPages] = useState(0);
 
   const [activeCategory, setActiveCategory] = useState(0);
-  const [activePage, setActivePage] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const [activeSearch, setActiveSearch] = useState('');
 
   const getProducts = async () => {
-    const prods = await api.getProducts();
+    const prods = await api.getProducts(
+      activeCategory,
+      activePage,
+      activeSearch,
+    );
     if (prods.error === '') {
       setProducts(prods.result.data);
       setTotalPages(prods.result.pages);
       setActivePage(prods.result.page);
     }
   };
+
+  useEffect(() => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      setActiveSearch(headerSearch);
+    }, 1000);
+  }, [headerSearch]);
 
   useEffect(() => {
     api.getCategories().then((res) => {
@@ -43,7 +56,8 @@ export default () => {
   useEffect(() => {
     setProducts([]);
     getProducts();
-  }, [activeCategory, activePage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategory, activePage, activeSearch]);
   return (
     <Container>
       <Header search={headerSearch} onSearch={setHeaderSearch} />
