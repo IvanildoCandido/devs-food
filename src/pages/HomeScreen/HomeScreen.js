@@ -14,6 +14,7 @@ import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import ReactTooltip from 'react-tooltip';
 import ProductItem from '../../components/ProductItem/ProductItem';
 import Modal from '../../components/Modal/Modal';
+import ModalProduct from '../../components/ModalProduct/ModalProduct';
 
 let searchTimer = null;
 export default () => {
@@ -21,11 +22,17 @@ export default () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [modalStatus, setModalStatus] = useState(true);
+  const [modalStatus, setModalStatus] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const [activeCategory, setActiveCategory] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const [activeSearch, setActiveSearch] = useState('');
+
+  const handleProductClick = (data) => {
+    setModalData(data);
+    setModalStatus(true);
+  };
 
   const getProducts = async () => {
     const prods = await api.getProducts(
@@ -91,7 +98,11 @@ export default () => {
         <ProductArea>
           <ProductList>
             {products.map((item, index) => (
-              <ProductItem key={index} data={item} />
+              <ProductItem
+                key={index}
+                data={item}
+                onClick={handleProductClick}
+              />
             ))}
           </ProductList>
         </ProductArea>
@@ -113,7 +124,7 @@ export default () => {
         </ProductPaginationArea>
       )}
       <Modal status={modalStatus} setStatus={setModalStatus}>
-        Conteúdo do Modal
+        <ModalProduct data={modalData} setStatus={setModalStatus} />
       </Modal>
     </Container>
   );
