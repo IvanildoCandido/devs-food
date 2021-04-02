@@ -13,6 +13,7 @@ import api from '../../api';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import ReactTooltip from 'react-tooltip';
 import ProductItem from '../../components/ProductItem/ProductItem';
+import Modal from '../../components/Modal/Modal';
 
 let searchTimer = null;
 export default () => {
@@ -20,6 +21,7 @@ export default () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [modalStatus, setModalStatus] = useState(true);
 
   const [activeCategory, setActiveCategory] = useState(0);
   const [activePage, setActivePage] = useState(1);
@@ -110,6 +112,9 @@ export default () => {
             ))}
         </ProductPaginationArea>
       )}
+      <Modal status={modalStatus} setStatus={setModalStatus}>
+        Conteúdo do Modal
+      </Modal>
     </Container>
   );
 };
